@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Ingresos</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+         
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+    <h2 class="mb-4">Registro de Ingresos</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Concepto</th>
+                <th>Monto</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% ingresos.forEach((ingreso, index) => { %>
+                <tr>
+                    <td><%= ingreso.Fecha %></td>
+                    <td><%= ingreso.Concepto %></td>
+                    <td><%= ingreso.Monto %></td>
+                    <td>
+                        <a href="#" onclick="editarIngreso('<%= ingreso.Fecha %>', '<%= ingreso.Concepto %>', '<%= ingreso.Monto %>', '<%= index %>');">Editar</a>
+                        |
+                        <span class="eliminar-btn" onclick="eliminarIngreso('<%= index %>');">Eliminar</span>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+    <div id="editarIngresoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editarIngresoModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarIngresoModalLabel">Editar Ingreso</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editarIngresoForm" action="/editar-ingreso" method="POST">
+                        <input type="hidden" name="indice" id="indice">
+                        <div class="form-group">
+                            <label for="fecha">Fecha:</label>
+                            <input type="date" id="fecha" name="fecha" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="concepto">Concepto:</label>
+                            <input type="text" id="concepto" name="concepto" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="monto">Monto:</label>
+                            <input type="number" id="monto" name="monto" step="any" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<script src="ingresos.js"></script> <!-- Enlace al archivo de script externo -->
+
+</body>
+</html>
